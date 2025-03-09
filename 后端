@@ -1,0 +1,37 @@
+// server.js
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// 假设有一个函数来处理用户设置更新（这里省略了数据库调用）
+const handleUserSettingsUpdate = (req, res) => {
+  // 数据库调用位置：这里应该有一个数据库操作来更新用户设置
+  // 例如：User.updateOne({ _id: userId }, { language: req.body.language, culture: req.body.culture })
+  res.status(200).send('User settings updated successfully');
+};
+
+// 假设有一个函数来处理匹配用户请求（这里省略了数据库调用）
+const handleMatchedUsersRequest = (req, res) => {
+  // 数据库调用位置：这里应该有一个数据库查询来根据语言和文化偏好匹配用户
+  // 例如：User.find({ language: req.query.language, culture: req.query.culture })
+  // 然后处理查询结果并返回给前端
+  res.status(200).send([]); // 返回一个空数组作为示例
+};
+
+// API路由
+app.post('/api/user-settings', handleUserSettingsUpdate);
+app.get('/api/matched-users', handleMatchedUsersRequest);
+
+// WebSocket服务器（这里仅作为示例，实际上应该使用专门的WebSocket库如ws）
+// 注意：在实际项目中，WebSocket服务器通常会作为单独的服务运行，并可能与Express服务器分离
+const WebSocketServer = require('ws').Server;
+const wss = new WebSocketServer({ port: 8080 });
+
+wss.on('connection', (ws) => {
+  // 处理WebSocket连接和消息的逻辑（这里省略）
+});
+
+// 启动Express服务器
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
